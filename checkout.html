@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – DRENGR Clothing Co.</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #141414;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+
+    form label {
+      display: block;
+      margin-top: 15px;
+      font-size: 0.95rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: none;
+      background: #1e1e1e;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    textarea {
+      height: 100px;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px;
+      background: cyan;
+      color: #000;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #00ffffb0;
+    }
+
+    .summary-box {
+      background: #1b1b1b;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .summary-box h2 {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Checkout</h1>
+
+  <div class="container">
+    <div class="summary-box">
+      <h2>Order Summary</h2>
+      <p id="orderItems">Loading cart...</p>
+      <p style="margin-top: 10px; font-size: 1.2rem; font-weight: bold;">Total: Rs. <span id="orderTotal">0</span></p>
+    </div>
+
+    <form id="checkoutForm">
+      <label>Full Name
+        <input type="text" required name="name" />
+      </label>
+
+      <label>Email
+        <input type="email" required name="email" />
+      </label>
+
+      <label>Phone Number
+        <input type="text" required name="phone" />
+      </label>
+
+      <label>Shipping Address
+        <textarea required name="address"></textarea>
+      </label>
+
+      <label>City
+        <input type="text" required name="city" />
+      </label>
+
+      <label>Postal Code
+        <input type="text" required name="postal" />
+      </label>
+
+      <button type="submit" class="btn">Proceed to Payment</button>
+    </form>
+  </div>
+
+  <script>
+    // Load cart from localStorage
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const orderItems = document.getElementById("orderItems");
+    const orderTotal = document.getElementById("orderTotal");
+
+    if (cart.length === 0) {
+      orderItems.innerHTML = "Your cart is empty.";
+    } else {
+      let html = "";
+      let total = 0;
+
+      cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        html += `<div>${item.name} (x${item.quantity}) - Rs. ${subtotal}</div>`;
+      });
+
+      orderItems.innerHTML = html;
+      orderTotal.textContent = total;
+    }
+
+    // Submit checkout form
+    document.getElementById("checkoutForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Checkout form submitted. Connect PayHere payment.");
+    });
+  </script>
+</body>
+</html>
